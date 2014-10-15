@@ -25,8 +25,29 @@ Usage
 -----
 
 ```
+
+{{toc}}
+
 {{toc start="1" end="3"}}
+
 ```
+
+Result:
+
+```
+<li><a href="#headline1">Headline H1</a></li>
+<ul>
+  <li><a href="#headline2">Headline H2</a></li>
+  <ul>
+    <li><a href="#headline3">Headline H3</a></li>
+    <li><a href="#headline3">Headline H3</a></li>
+  </ul>
+  <li><a href="#headline2">Headline H2</a></li>
+  <li><a href="#headline2">Headline H2</a></li>
+  <li><a href="#headline2">Headline H2</a></li>
+</ul>
+```
+
 
 License
 -------
