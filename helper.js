@@ -1,3 +1,5 @@
+'use strict';
+
 var hbs     = require('express-hbs'),
     _       = require('lodash'),
     cheerio = require('cheerio');
@@ -21,7 +23,7 @@ registerHelper = function () {
   //
   // **returns** SafeString content html.
   //
-  hbs.registerHelper('toc', function toc(options) {
+  hbs.registerHelper('toc', function(options) {
 
     options = options || {};
     options.hash = options.hash || {};
@@ -38,7 +40,7 @@ registerHelper = function () {
           toc.push('<li><a href="#' + $(elem).attr('id') + '">' + $(elem).text() + '</a></li>');
           getHeadlines(start, end, start + 1, elem);
         });
-      } else {
+      } else if($(elem).nextUntil('h' + current - 1,'h' + current).length !== 0) {
         toc.push('<ul>');
         $(elem).nextUntil('h' + current - 1,'h' + current).each(function(i, elem) {
           toc.push('<li><a href="#' + $(elem).attr('id') + '">' + $(elem).text() + '</a></li>');
@@ -46,11 +48,11 @@ registerHelper = function () {
         });
         toc.push('</ul>');
       }
-    }
+    };
 
     getHeadlines(startLevel, maxDepth);
 
-    return new hbs.handlebars.SafeString('<li>' + toc.join('</li><li>') + '</li>');
+    return new hbs.handlebars.SafeString(toc.join(' '));
 
   });
 
