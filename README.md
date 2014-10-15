@@ -7,8 +7,8 @@ Ghost Blog Handlebars Helper for Table of Contents
 Installing
 ----------
 
-Put the `helper.js` file into your current theme folder
-the change `ghost/index.js` like this:
+Put the `helper.js` file into your current theme folder,
+then change the file `ghost/index.js` like this:
 
 ```js
 express = require('express');
