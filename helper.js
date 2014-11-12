@@ -34,23 +34,33 @@ registerHelper = function () {
     var maxDepth = options.hash.end || 4;
 
     var getHeadlines = function(start, end, current, elem) {
-      if(current === end) { return; }
+      if(parseInt(current) > parseInt(end)) { return; }
       if(_.isUndefined(current)) {
         $('h' + start).each(function(i, elem) {
           toc.push('<li><a href="#' + $(elem).attr('id') + '">' + $(elem).text() + '</a></li>');
-          getHeadlines(start, end, start + 1, elem);
+          getHeadlines(start, end, parseInt(start) + 1, elem);
         });
-      } else if($(elem).nextUntil('h' + current - 1,'h' + current).length !== 0) {
-        toc.push('<ul>');
-        $(elem).nextUntil('h' + current - 1,'h' + current).each(function(i, elem) {
-          toc.push('<li><a href="#' + $(elem).attr('id') + '">' + $(elem).text() + '</a></li>');
-          getHeadlines(start, end, current + 1, elem);
-        });
-        toc.push('</ul>');
+      } else {
+        var $subHeaders = $(elem).nextUntil('h' + (parseInt(current) - 1), 'h' + current);
+        if($subHeaders.length !== 0) {
+          toc.push('<ul>');
+          $subHeaders.each(function(i, elem) {
+            toc.push('<li><a href="#' + $(elem).attr('id') + '">' + $(elem).text() + '</a></li>');
+            getHeadlines(start, end, parseInt(current) + 1, elem);
+          });
+          toc.push('</ul>');
+        }
       }
     };
 
-    getHeadlines(startLevel, maxDepth);
+    // Ignore the cases where no header with startLevel exists
+    while(startLevel <= maxDepth && $('h' + startLevel).length === 0){
+      startLevel++;
+    }
+
+    if (startLevel <= maxDepth) {
+      getHeadlines(startLevel, maxDepth);
+    }
 
     return new hbs.handlebars.SafeString(toc.join(' '));
 
