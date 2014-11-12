@@ -34,7 +34,7 @@ registerHelper = function () {
     var maxDepth = options.hash.end || 4;
 
     var getHeadlines = function(start, end, current, elem) {
-      if(current === end) { return; }
+      if(parseInt(current) > parseInt(end)) { return; }
       if(_.isUndefined(current)) {
         $('h' + start).each(function(i, elem) {
           toc.push('<li><a href="#' + $(elem).attr('id') + '">' + $(elem).text() + '</a></li>');
@@ -53,7 +53,14 @@ registerHelper = function () {
       }
     };
 
-    getHeadlines(startLevel, maxDepth);
+    // Ignore the cases where no header with startLevel exists
+    while(startLevel <= maxDepth && $('h' + startLevel).length === 0){
+      startLevel++;
+    }
+
+    if (startLevel <= maxDepth) {
+      getHeadlines(startLevel, maxDepth);
+    }
 
     return new hbs.handlebars.SafeString(toc.join(' '));
 
