@@ -2,6 +2,7 @@
 
 var hbs     = require('express-hbs'),
     _       = require('lodash'),
+    registerHelper,
     cheerio = require('cheerio');
 
 
