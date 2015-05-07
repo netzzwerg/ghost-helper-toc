@@ -5,7 +5,7 @@ var hbs     = require('express-hbs'),
     cheerio = require('cheerio');
 
 
-registerHelper = function () {
+var registerHelper = function () {
 
   //
   // ### Table of Contents helper
@@ -25,8 +25,8 @@ registerHelper = function () {
   //
   hbs.registerHelper('toc', function(options) {
 
-    options = options || {};
-    options.hash = options.hash || {};
+    var options = options || {};
+        options.hash = options.hash || {};
 
     var toc = [];
     var $ = cheerio.load(this.html);
