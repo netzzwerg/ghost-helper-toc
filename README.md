@@ -11,12 +11,13 @@ Put the `helper.js` file into your current theme folder,
 then change the file `ghost/index.js` like this:
 
 ```js
-express = require('express');
-ghost = require('./core');
-errors = require('./core/server/errors');
+var express,
+    ghost,
+    parentApp,
+    errors;
 
 // add this line
-require('./content/themes/yourtheme/helper')();
+require('./content/themes/yourtheme/toc')();
 
 ```
 
